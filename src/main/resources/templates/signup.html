@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+</head>
+<body>
+<form action="/signup" method="POST">
+    <label>
+        <h4>Username:</h4>
+        <input name="username" />
+    </label>
+    <label>
+        <h4>Password:</h4>
+        <input name="password" />
+    </label>
+    <label>
+        <h4>First Name:</h4>
+        <input name="firstName" />
+    </label>
+    <label>
+        <h4>Last Name:</h4>
+        <input name="lastName"/>
+    </label>
+    <label>
+        <h4>Date of Birth (mm/dd/yy):</h4>
+        <input name="dateOfBirth"/>
+    </label>
+    <label>
+        <h4>Bio:</h4>
+        <textarea name="bio"></textarea>
+    </label>
+    <input type="submit">
+</form>
+</body>
+</html>
