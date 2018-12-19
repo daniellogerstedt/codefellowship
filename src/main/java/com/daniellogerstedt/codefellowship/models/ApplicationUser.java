@@ -12,16 +12,17 @@ public class ApplicationUser {
     // Database Provided
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long id;
+    public long id;
 
     // User Provided
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String dateOfBirth;
-    private String bio;
-    private String limitedInfo;
+    public String img;
+    public String username;
+    public String password;
+    public String firstName;
+    public String lastName;
+    public String dateOfBirth;
+    public String bio;
+    public String limited;
 
     public ApplicationUser() {}
 
@@ -32,7 +33,8 @@ public class ApplicationUser {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.bio = bio;
-        this.limitedInfo = "User: " + username + " First Name: " + firstName + " Date of Birth: " + dateOfBirth;
+        this.limited = "User: " + username + " First Name: " + firstName + " Date of Birth: " + dateOfBirth;
+        this.img = "/assets/defaultprofile.jpg";
     }
 
     public String toString() {
@@ -40,7 +42,7 @@ public class ApplicationUser {
     }
 
     public String getLimited () {
-        return this.limitedInfo;
+        return this.limited;
     }
 
 }

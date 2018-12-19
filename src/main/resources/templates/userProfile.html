@@ -7,8 +7,12 @@
 
 </head>
 <body>
-    <ul>
-        <li th:each="user : ${users}"><a th:href="${'/users/' + user.id}"><p th:text="${user.limited}"></p></a></li>
-    </ul>
+    <img th:src="${user.img}" height="150" />
+    <h3 th:text="${user.username}"></h3>
+    <h4 th:text="${user.firstName + ' ' + user.lastName}"></h4>
+    <h6 th:text="${user.dateOfBirth}"></h6>
+    <p>
+        <pre th:text="${user.bio}"></pre>
+    </p>
 </body>
 </html>
