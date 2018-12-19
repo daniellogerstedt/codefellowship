@@ -43,11 +43,11 @@ To run this app follow these instructions:
 
 ### Templates
 
-3-1. [Index](#index)
-3-2. [Sign Up](#sign-up)
-3-2. [Users](#users)
-3-2. [User Profile](#user-profile)
-3-2. [Error](#error)
+3-1. [Index](#index)<br />
+3-2. [Sign Up](#sign-up)<br />
+3-2. [Users](#users)<br />
+3-2. [User Profile](#user-profile)<br />
+3-2. [Error](#error)<br />
 
 #### Index
 
@@ -91,7 +91,7 @@ This is the formatted error page for displaying errors when they occur.
 
 ### Configs
 
-4-1. [Web Security Config](#web-security-config)
+4-1. [Web Security Config](#web-security-config)<br />
 
 Configs control settings for the various libraries and frameworks
 
@@ -105,8 +105,8 @@ This config is used to set up the web security framework for Spring.
 
 ### Controllers
 
-5-1. [Security Controller](#security-controller)
-5-2. [Page Controller](#page-controller)
+5-1. [Security Controller](#security-controller)<br />
+5-2. [Page Controller](#page-controller)<br />
 
 Controllers manage routing for the request response cycle.
 
@@ -128,8 +128,8 @@ This controller manages all non authentication routes. This includes viewing use
 
 ### Models
 
-6-1. [Application User](#application-user)
-6-2. [Resource Not Found Exception](#resource-not-found-exception)
+6-1. [Application User](#application-user)<br />
+6-2. [Resource Not Found Exception](#resource-not-found-exception)<br />
 
 Models control the formatting for certain instanced object types to be used to pass information throughout the app during operation.
 
@@ -151,7 +151,7 @@ This is an extension of an Exception that is used to throw 404 errors when certa
 
 ### Repositories
 
-7-1. [Application User Repository](#application-user-repository)
+7-1. [Application User Repository](#application-user-repository)<br />
 
 Repositories allow easy access to the database for making queries related to a specific model
 
