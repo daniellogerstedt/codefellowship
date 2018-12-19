@@ -20,7 +20,6 @@ public class SecurityController {
 
     @RequestMapping(value="/signup", method = RequestMethod.GET)
     public String signup() {
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> I'M HERE");
         return "signup";
 
     }
