@@ -1,6 +1,8 @@
 package com.daniellogerstedt.codefellowship.controllers;
 
+import com.daniellogerstedt.codefellowship.models.BlogPost;
 import com.daniellogerstedt.codefellowship.models.ResourceNotFoundException;
+import com.daniellogerstedt.codefellowship.repositories.BlogPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +27,9 @@ public class PageController {
 
     @Autowired
     ApplicationUserRepository userRepo;
+
+    @Autowired
+    BlogPostRepository blogRepo;
 
     @RequestMapping("/")
     public String index() {
@@ -52,14 +56,19 @@ public class PageController {
 
     @RequestMapping("/myprofile")
     public String userProfile(Model m, Principal p) {
-
-        m.addAttribute("user", ((UsernamePasswordAuthenticationToken) p).getPrincipal());
+        ApplicationUser user = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
+        m.addAttribute("user", user);
         m.addAttribute("myProfile", true);
         return "userProfile";
     }
 
-    @RequestMapping(value="/myprofile/newpost", method= RequestMethod.POST)
-    public RedirectView blogPost(@RequestParam String blogPost, Principal p) {
+    @RequestMapping(value="/myprofile", method= RequestMethod.POST)
+    public RedirectView blogPost(@RequestParam String content, Principal p) {
+        ApplicationUser user = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
+        BlogPost post = new BlogPost(content, user);
+        blogRepo.save(post);
+        user.posts.add(post);
+        userRepo.save(user);
         return new RedirectView("/myprofile");
     }
 }
