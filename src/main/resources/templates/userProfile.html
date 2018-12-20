@@ -16,5 +16,13 @@
     <p>
         <pre th:text="${user.bio}"></pre>
     </p>
+
+    <form th:if="${myProfile}">
+        <label>
+            <h4>New Post:</h4>
+            <input name="blogPost" />
+        </label>
+        <input type="submit" />
+    </form>
 </body>
 </html>

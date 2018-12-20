@@ -4,6 +4,7 @@ import com.daniellogerstedt.codefellowship.models.ApplicationUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,7 @@ public class SecurityController {
     @Autowired
     ApplicationUserRepository userRepo;
 
-    @RequestMapping(value="/signup", method = RequestMethod.GET)
+    @RequestMapping("/signup")
     public String signup() {
         return "signup";
 
@@ -34,9 +35,15 @@ public class SecurityController {
             @RequestParam String bio) {
         // Hash incoming password immediately so that it is never stored in memory unhashed.
         String hashword = bCryptPasswordEncoder.encode(password);
+        if (userRepo.findByUsername(username) != null) return new RedirectView("/login");
         ApplicationUser newUser = new ApplicationUser(username, hashword, firstName, lastName, dateOfBirth, bio);
         userRepo.save(newUser);
-        return new RedirectView("/users");
+        return new RedirectView("/myprofile");
+    }
+
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
     }
 
 }

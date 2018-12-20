@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link th:replace="fragments.html :: css-boot" >
+    <link th:replace="fragments.html :: css-base" >
+</head>
+<body>
+    <nav th:replace="fragments.html :: nav"></nav>
+    <form action="/perform_login" method="POST">
+        <label>
+            <h4>Username:</h4>
+            <input name="username" />
+        </label>
+        <label>
+            <h4>Password:</h4>
+            <input name="password" />
+        </label>
+        <input type="submit">
+    </form>
+</body>
+</html>
