@@ -9,9 +9,15 @@
             border: solid 1px #888;
             padding: 10px;
         }
+        .nav td {
+            vertical-align: top;
+            border: none;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
+    <nav th:replace="fragments.html :: nav"></nav>
     <h3>An Error Has Occurred</h3>
     <table>
         <!--Error Page Format Found At: https://www.logicbig.com/tutorials/spring-framework/spring-boot/custom-thymeleaf-error-page.html

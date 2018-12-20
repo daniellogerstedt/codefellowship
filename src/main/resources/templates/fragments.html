@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:fragment="css-boot" rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link th:fragment="css-base" type="text/css" rel="stylesheet" th:href="@{/styles/base.css}" href="styles/base.css">
+</head>
+    <body>
+        <nav th:fragment="nav">
+            <table class="nav">
+                <tr>
+                    <td><a href="/">Home</a></td>
+                    <td><a href="/signup">Sign Up</a></td>
+                    <td><a href="/login">Log In</a></td>
+                </tr>
+            </table>
+        </nav>
+    </body>
+</html>

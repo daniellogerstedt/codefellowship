@@ -17,8 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     // We'll comment in these lines tomorrow, when we add a UserDetailsServiceImpl!
-     @Autowired
-     private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
 
     @Bean
@@ -39,14 +39,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/signup", "/login", "/").permitAll()
+                .antMatchers("/signup", "/login", "/", "/styles/*", "/assets/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/userProfile", true)
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/perform_login")
+                .defaultSuccessUrl("/myprofile", true)
                 .failureUrl("/login?error=true")
                 .and()
-                .logout().logoutUrl("/perform_logout").deleteCookies("JSESSIONID");
+                .logout()
+                .logoutUrl("/perform_logout")
+                .deleteCookies("JSESSIONID");
     }
 
     @Override

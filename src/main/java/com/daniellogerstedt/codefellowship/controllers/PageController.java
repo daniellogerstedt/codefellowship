@@ -1,7 +1,10 @@
 package com.daniellogerstedt.codefellowship.controllers;
 
+import com.daniellogerstedt.codefellowship.models.BlogPost;
 import com.daniellogerstedt.codefellowship.models.ResourceNotFoundException;
+import com.daniellogerstedt.codefellowship.repositories.BlogPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.daniellogerstedt.codefellowship.models.ApplicationUser;
 import com.daniellogerstedt.codefellowship.repositories.ApplicationUserRepository;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +27,9 @@ public class PageController {
 
     @Autowired
     ApplicationUserRepository userRepo;
+
+    @Autowired
+    BlogPostRepository blogRepo;
 
     @RequestMapping("/")
     public String index() {
@@ -38,9 +47,28 @@ public class PageController {
         Optional<ApplicationUser> user = userRepo.findById(id);
         if (user.isPresent()) {
             m.addAttribute("user", user.get());
+            m.addAttribute("myProfile", false);
             return "userProfile";
         } else {
             throw new ResourceNotFoundException();
         }
+    }
+
+    @RequestMapping("/myprofile")
+    public String userProfile(Model m, Principal p) {
+        ApplicationUser user = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
+        m.addAttribute("user", user);
+        m.addAttribute("myProfile", true);
+        return "userProfile";
+    }
+
+    @RequestMapping(value="/myprofile", method= RequestMethod.POST)
+    public RedirectView blogPost(@RequestParam String content, Principal p) {
+        ApplicationUser user = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
+        BlogPost post = new BlogPost(content, user);
+        blogRepo.save(post);
+        user.posts.add(post);
+        userRepo.save(user);
+        return new RedirectView("/myprofile");
     }
 }

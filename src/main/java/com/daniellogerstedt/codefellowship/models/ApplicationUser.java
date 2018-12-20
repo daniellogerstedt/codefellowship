@@ -4,11 +4,10 @@ package com.daniellogerstedt.codefellowship.models;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -16,17 +15,22 @@ public class ApplicationUser implements UserDetails {
     // Database Provided
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    public long id;
+    private long id;
 
     // User Provided
     public String img;
+    @Column(unique = true)
     public String username;
-    public String password;
+    private String password;
     public String firstName;
     public String lastName;
     public String dateOfBirth;
     public String bio;
     public String limited;
+
+    // FetchType.EAGER was the solution to an error I got. It was found at https://stackoverflow.com/questions/11746499/how-to-solve-the-failed-to-lazily-initialize-a-collection-of-role-hibernate-ex
+    @OneToMany(fetch=FetchType.EAGER)
+    public List<BlogPost> posts;
 
     public ApplicationUser() {}
 
@@ -39,10 +43,11 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
         this.limited = "User: " + username + " First Name: " + firstName + " Date of Birth: " + dateOfBirth;
         this.img = "/assets/defaultprofile.jpg";
+        this.posts = new ArrayList<>();
     }
 
     public String toString() {
-        return "User: " + username + " Full Name: " + firstName + " " + lastName + " Date of Birth: " + dateOfBirth + "\n" + "Bio: " + bio;
+        return "User: " + username + "\nFull Name: " + firstName + " " + lastName + "\nDate of Birth: " + dateOfBirth + "\n" + "Bio: " + bio;
     }
 
     public String getLimited () {
@@ -57,6 +62,10 @@ public class ApplicationUser implements UserDetails {
     @Override
     public String getPassword() {
         return this.password;
+    }
+
+    public List<BlogPost> getPosts() {
+        return this.posts;
     }
 
     @Override

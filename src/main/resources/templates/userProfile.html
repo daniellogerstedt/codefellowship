@@ -3,16 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>User Information</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link th:replace="fragments.html :: css-boot" >
+    <link th:replace="fragments.html :: css-base" >
 </head>
 <body>
-    <img th:src="${user.img}" height="150" />
-    <h3 th:text="${user.username}"></h3>
-    <h4 th:text="${user.firstName + ' ' + user.lastName}"></h4>
-    <h6 th:text="${user.dateOfBirth}"></h6>
-    <p>
-        <pre th:text="${user.bio}"></pre>
-    </p>
+    <nav th:replace="fragments.html :: nav"></nav>
+    <div class="profileInfoContainer">
+        <img th:src="${user.img}" height="150" />
+        <h3 th:text="${user.username}"></h3>
+        <h4 th:text="${user.firstName + ' ' + user.lastName}"></h4>
+        <h6 th:text="${user.dateOfBirth}"></h6>
+        <p>
+            <pre th:text="${user.bio}"></pre>
+        </p>
+
+        <form action="/myprofile" method="POST" th:if="${myProfile}">
+            <label>
+                <h4>New Post:</h4>
+                <input name="content" />
+            </label>
+            <input type="submit" />
+        </form>
+    </div>
+    <div class="feedContainer">
+        <div th:each="post : ${user.posts}" class="postContainer">
+            <p th:text="${post.postDateTime}"></p>
+            <p th:text="${post.contents}"></p>
+        </div>
+    </div>
 </body>
 </html>
