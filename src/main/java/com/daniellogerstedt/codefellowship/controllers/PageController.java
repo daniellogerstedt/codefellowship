@@ -14,6 +14,7 @@ import com.daniellogerstedt.codefellowship.models.ApplicationUser;
 import com.daniellogerstedt.codefellowship.repositories.ApplicationUserRepository;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
@@ -45,18 +46,17 @@ public class PageController {
     }
 
     @RequestMapping("/users/{id}")
-    public String users(@PathVariable long id, Model m, Principal p) {
+    public ModelAndView users(@PathVariable long id, Model m, Principal p) {
         Optional<ApplicationUser> user = userRepo.findById(id);
         ApplicationUser currentUser = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
         if (user.isPresent()) {
             m.addAttribute("user", user.get());
             if (currentUser.getId() != user.get().getId()) {
-//                if (currentUser.usersIFollow.contains(user)) m.addAttribute("followed", true); starting work on unfollow button
                 m.addAttribute("myProfile", false);
             } else {
-                m.addAttribute("myProfile", true);
+                return new ModelAndView("redirect:/myprofile");
             }
-            return "userProfile";
+            return new ModelAndView("userProfile");
         } else {
             throw new ResourceNotFoundException();
         }
