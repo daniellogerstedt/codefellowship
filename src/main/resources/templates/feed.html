@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Feed</title>
+    <link th:replace="fragments.html :: css-boot" >
+    <link th:replace="fragments.html :: css-base" >
+</head>
+<body>
+    <h3>Welcome to the Feed</h3>
+    <nav th:replace="fragments.html :: nav"></nav>
+    <div class="feedContainer">
+        <div th:each="post : ${posts}" class="postContainer">
+            <span th:text="${post.user.username} + ' says:'"></span>
+            <span th:text="${post.postDateTime}"></span>
+            <span th:text="${post.contents}"></span>
+        </div>
+    </div>
+</body>
+</html>

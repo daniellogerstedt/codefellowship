@@ -5,9 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class ApplicationUser implements UserDetails {
@@ -28,9 +26,19 @@ public class ApplicationUser implements UserDetails {
     public String bio;
     public String limited;
 
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(
+        name="User_Follows",
+        joinColumns = { @JoinColumn (name="follower_id")},
+        inverseJoinColumns = { @JoinColumn(name="followee_id")})
+    public Set<ApplicationUser> usersIFollow = new HashSet<>();
+
+    @ManyToMany(fetch=FetchType.EAGER)
+    public Set<ApplicationUser> followedByUsers = new HashSet<>();
+
     // FetchType.EAGER was the solution to an error I got. It was found at https://stackoverflow.com/questions/11746499/how-to-solve-the-failed-to-lazily-initialize-a-collection-of-role-hibernate-ex
-    @OneToMany(fetch=FetchType.EAGER)
-    public List<BlogPost> posts;
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "user")
+    public Set<BlogPost> posts = new HashSet<>();
 
     public ApplicationUser() {}
 
@@ -43,7 +51,7 @@ public class ApplicationUser implements UserDetails {
         this.bio = bio;
         this.limited = "User: " + username + " First Name: " + firstName + " Date of Birth: " + dateOfBirth;
         this.img = "/assets/defaultprofile.jpg";
-        this.posts = new ArrayList<>();
+
     }
 
     public String toString() {
@@ -64,8 +72,12 @@ public class ApplicationUser implements UserDetails {
         return this.password;
     }
 
-    public List<BlogPost> getPosts() {
+    public Set<BlogPost> getPosts() {
         return this.posts;
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     @Override

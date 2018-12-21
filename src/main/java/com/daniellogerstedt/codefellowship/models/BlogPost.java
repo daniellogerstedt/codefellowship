@@ -14,7 +14,7 @@ public class BlogPost {
 
     @ManyToOne
     @JoinColumn(name="application_user_id")
-    private ApplicationUser user;
+    public ApplicationUser user;
 
     public BlogPost () {}
 
