@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class PageController {
@@ -43,15 +45,34 @@ public class PageController {
     }
 
     @RequestMapping("/users/{id}")
-    public String users(@PathVariable long id, Model m) {
+    public String users(@PathVariable long id, Model m, Principal p) {
         Optional<ApplicationUser> user = userRepo.findById(id);
+        ApplicationUser currentUser = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
         if (user.isPresent()) {
             m.addAttribute("user", user.get());
-            m.addAttribute("myProfile", false);
+            if (currentUser.getId() != user.get().getId()) {
+//                if (currentUser.usersIFollow.contains(user)) m.addAttribute("followed", true); starting work on unfollow button
+                m.addAttribute("myProfile", false);
+            } else {
+                m.addAttribute("myProfile", true);
+            }
             return "userProfile";
         } else {
             throw new ResourceNotFoundException();
         }
+    }
+
+    @RequestMapping(value="/users/{id}/follow", method=RequestMethod.POST)
+    public RedirectView followUser(Principal p, @PathVariable long id) {
+        ApplicationUser user = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
+        if(userRepo.findById(id).isPresent()) {
+            ApplicationUser followed = userRepo.findById(id).get();
+            user.usersIFollow.add(followed);
+            followed.followedByUsers.add(user);
+            userRepo.save(followed);
+            userRepo.save(user);
+        }
+        return new RedirectView("/users/" + id);
     }
 
     @RequestMapping("/myprofile")
@@ -70,5 +91,16 @@ public class PageController {
         user.posts.add(post);
         userRepo.save(user);
         return new RedirectView("/myprofile");
+    }
+
+    @RequestMapping(value="/feed")
+    public String getFeed(Model m, Principal p) {
+        ApplicationUser user = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
+        Set<BlogPost> feedPosts = new HashSet<>();
+        for (ApplicationUser friend : user.usersIFollow) {
+            feedPosts.addAll(friend.posts);
+        }
+        m.addAttribute("posts", feedPosts);
+        return "feed";
     }
 }

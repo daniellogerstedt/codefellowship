@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>User Information</title>
-    <link th:replace="fragments.html :: css-boot" >
-    <link th:replace="fragments.html :: css-base" >
-</head>
-<body>
-    <nav th:replace="fragments.html :: nav"></nav>
-    <ul>
-        <li th:each="user : ${users}"><a th:href="${'/users/' + user.id}"><p th:text="${user.limited}"></p></a></li>
-    </ul>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>User Information</title>
+        <link th:replace="fragments.html :: css-boot" >
+        <link th:replace="fragments.html :: css-base" >
+    </head>
+    <body>
+        <h3>User List</h3>
+        <nav th:replace="fragments.html :: nav"></nav>
+        <ul>
+            <li th:each="user : ${users}"><a th:href="${'/users/' + user.id}"><p th:text="${user.limited}"></p></a></li>
+        </ul>
+    </body>
 </html>

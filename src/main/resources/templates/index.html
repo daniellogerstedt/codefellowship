@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <link th:replace="fragments.html :: css-boot" >
-    <link th:replace="fragments.html :: css-base" >
-</head>
-<body>
-<header>
-
-</header>
-<nav th:replace="fragments.html :: nav"></nav>
-
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+        <link th:replace="fragments.html :: css-boot" >
+        <link th:replace="fragments.html :: css-base" >
+    </head>
+    <body>
+        <h3>Welcome to the Homepage</h3>
+        <nav th:replace="fragments.html :: nav"></nav>
+        <p>
+            This site is a blog page that allows users to sign up and write short thoughts as well as follow other users and view a feed of their thoughts. It is a work in progress.
+        </p>
+    </body>
 </html>
