@@ -9,12 +9,12 @@
 <body>
     <h3>Welcome to the Feed</h3>
     <nav th:replace="fragments.html :: nav"></nav>
-    <div class="feedContainer">
-        <div th:each="post : ${posts}" class="postContainer">
-            <span th:text="${post.user.username} + ' says:'"></span>
-            <span th:text="${post.postDateTime}"></span>
-            <span th:text="${post.contents}"></span>
-        </div>
-    </div>
+    <table class="feedContainer">
+        <tr th:each="post : ${posts}" class="postContainer">
+            <td class="feedPostContent">"<span th:text="${post.contents}"></span>"</td>
+            <td class="feedPostUser">Was Posted By: <a th:href="'/users/' + ${post.user.id}" th:text="${post.user.username}"></a></td>
+            <td class="feedPostTime">At: <span th:text="${post.postDateTime}"></span></td>
+        </tr>
+    </table>
 </body>
 </html>

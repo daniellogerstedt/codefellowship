@@ -1,3 +1,43 @@
+html {
+
+    background: charcoal;
+
+}
+
+body {
+    background: black;
+    height: 100%;
+    width: 90%;
+    padding: 25px;
+    margin: auto;
+    color: #d3d3d3;
+    text-shadow: 5px -5px 8px #0062cc;
+}
+
+pre {
+    color: #d3d3d3;
+}
+
+.feedContainer{
+    width: 100%;
+}
+
+.feedContainer tr{
+    border-bottom: 2px solid #4273d0;
+}
+
+.feedPostContent{
+    width: 40%;
+}
+
+.feedPostUser{
+    width: 30%;
+}
+
+.feedPostTime{
+    width: 25%;
+}
+
 .nav td {
     vertical-align: top;
     border: none;

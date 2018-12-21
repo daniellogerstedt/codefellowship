@@ -17,7 +17,7 @@
             <p>
                 <pre th:text="${user.bio}"></pre>
             </p>
-            <form th:unless="${myprofile}" th:action="${'/users/' + user.id + '/follow'}" method="POST"><input type="submit" text="Follow"></form>
+            <form th:unless="${myprofile}" th:action="${'/users/' + user.id + '/follow'}" method="POST"><input type="submit" value="Follow"></form>
             <form action="/myprofile" method="POST" th:if="${myProfile}">
                 <label>
                     <h4>New Post:</h4>
